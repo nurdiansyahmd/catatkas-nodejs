@@ -4,7 +4,8 @@ import {
     getStockById,
     saveStock,
     updateStock,
-    deleteStock
+    deleteStock,
+
 } from "../controllers/StockController.js";
 
 const router = express.Router();

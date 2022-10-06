@@ -1,14 +1,69 @@
 import Stock from "../models/StockModels.js";
 import path from "path";
 import fs from "fs";
+import { Op } from "sequelize";
+
+
+// export const getCount = async(req, res) => {
+//     try {
+//         const resCount = await Stock.findOne({
+//             attributes:['quantity'],
+//             where:{
+//                 id: req.params.id
+//             }
+//         })
+//         if(resCount.quantity < 2){
+//             res.json({msg:"stock tipis"})
+//         }else{
+//             res.json({msg:"stock aman"})
+//         }
+//     } catch (error) {
+//         console.log(error.message);
+//     }
+    
+// }
 
 export const getStocks = async(req, res)=>{
-    try {
-        const response = await Stock.findAll();
-        res.json(response);
-    } catch (error) {
-        console.log(error.message);
-    }
+    //Query parameter
+    const page = parseInt(req.query.page) || 0;
+    const limit = parseInt(req.query.limit) || 10;
+    const search = req.query.search_query || "";
+    const offset = limit * page;
+    const totalRows = await Stock.count({
+        where:{
+            [Op.or]: [{productname:{
+                [Op.like]: '%'+search+'%'
+            }}]
+        }
+    });
+
+    const totalPage = Math.ceil(totalRows/limit);
+    const result = await Stock.findAll({
+        where:{
+            [Op.or]: [{productname:{
+                [Op.like]: '%'+search+'%'
+            }}]
+        },
+        offset: offset,
+        limit: limit,
+        order: [
+            ['id','DESC']
+        ]
+    });
+    res.json({
+        result: result,
+        page: page,
+        limit: limit,
+        totalRows: totalRows,
+        totalPage: totalPage
+    })
+
+    // try {
+    //     const response = await Stock.findAll();
+    //     res.json(response);
+    // } catch (error) {
+    //     console.log(error.message);
+    // }
 }
 
 export const getStockById = async(req, res)=>{

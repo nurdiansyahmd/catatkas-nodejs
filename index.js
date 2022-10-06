@@ -5,7 +5,11 @@ import StockRoute from "./routes/StockRoute.js";
 
 const app = new express();
 
-app.use(cors());
+app.use(cors({
+    headers: {
+        'Access-Control-Allow-Origin': '*'
+    }
+}));
 app.use(express.json());
 app.use(FileUpload());
 app.use(express.static("public"));
