@@ -23,7 +23,7 @@ import { Op } from "sequelize";
     
 // }
 
-export const getStocks = async(req, res)=>{
+export const stockSearch = async(req, res) => {
     //Query parameter
     const page = parseInt(req.query.page) || 0;
     const limit = parseInt(req.query.limit) || 10;
@@ -57,13 +57,15 @@ export const getStocks = async(req, res)=>{
         totalRows: totalRows,
         totalPage: totalPage
     })
+}
 
-    // try {
-    //     const response = await Stock.findAll();
-    //     res.json(response);
-    // } catch (error) {
-    //     console.log(error.message);
-    // }
+export const getStocks = async(req, res)=>{
+    try {
+        const response = await Stock.findAll();
+        res.json(response);
+    } catch (error) {
+        console.log(error.message);
+    }
 }
 
 export const getStockById = async(req, res)=>{
