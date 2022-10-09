@@ -1,16 +1,17 @@
 import express from "express";
 import {
-    getStocks,
+    // getStocks,
     getStockById,
     saveStock,
     updateStock,
     deleteStock,
+    stockSearch,
 
 } from "../controllers/StockController.js";
 
 const router = express.Router();
 
-router.get('/stocks', getStocks);
+router.get('/stocks', stockSearch);
 router.get('/stocks/:id', getStockById);
 router.post('/stocks', saveStock);
 router.patch('/stocks/:id', updateStock);

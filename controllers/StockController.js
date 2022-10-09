@@ -4,24 +4,7 @@ import fs from "fs";
 import { Op } from "sequelize";
 
 
-// export const getCount = async(req, res) => {
-//     try {
-//         const resCount = await Stock.findOne({
-//             attributes:['quantity'],
-//             where:{
-//                 id: req.params.id
-//             }
-//         })
-//         if(resCount.quantity < 2){
-//             res.json({msg:"stock tipis"})
-//         }else{
-//             res.json({msg:"stock aman"})
-//         }
-//     } catch (error) {
-//         console.log(error.message);
-//     }
-    
-// }
+
 
 export const stockSearch = async(req, res) => {
     //Query parameter
